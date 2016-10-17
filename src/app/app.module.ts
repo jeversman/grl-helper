@@ -8,6 +8,7 @@ import { TestComponent } from './test.component';
 import { MainPageComponent } from './main-page.component/main-page.component';
 import { StandingsComponent } from './standings.component/standings.component';
 import { PersonsComponent } from './persons.component/persons.component';
+import { PersonsService } from './persons.service/persons.service';
 
 import { AppRoutingModule } from './app-routing.module'
 
@@ -25,7 +26,7 @@ import { AppRoutingModule } from './app-routing.module'
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PersonsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
