@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './test.component';
 import { MainPageComponent } from './main-page.component/main-page.component';
 import { StandingsComponent } from './standings.component/standings.component';
+import { PersonsComponent } from './persons.component/persons.component';
 
 import { AppRoutingModule } from './app-routing.module'
 
@@ -15,7 +16,8 @@ import { AppRoutingModule } from './app-routing.module'
     AppComponent,
     TestComponent,
     MainPageComponent,
-    StandingsComponent
+    StandingsComponent,
+    PersonsComponent
   ],
   imports: [
     BrowserModule,

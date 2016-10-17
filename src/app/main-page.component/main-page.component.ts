@@ -2,19 +2,8 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'main-page',
-  templateUrl: 'main-page.component.html'
+  templateUrl: 'main-page.component.html',
+  styleUrls: ['main-page.component.scss']
 })
 
-export class MainPageComponent {
-  standingsClicked() {
-    console.log();
-  }
-
-  personsClicked() {
-    console.log();
-  }
-
-  characteristicsClicked() {
-    console.log();
-  }
-}
+export class MainPageComponent {}
