@@ -12,9 +12,20 @@ const readline = require('readline');
 
 var menu = ["new", "edit"];
 var properties = ["name", "age", "color"];
+var lastId = 0;
 
 function main() {
-  start();
+  // start();
+  test();
+}
+
+function test() {
+  var str = "";
+
+  prompt.get('name var', function(err, result) {
+
+
+  });
 }
 
 function start() {
@@ -100,6 +111,11 @@ function writeJSON(obj) {
 	jsonfile.writeFile('test.json', obj, function (err) {
 		console.error(err);
 	});
+}
+
+function getNextId() {
+  lastId++;
+  return lastId;
 }
 
 
