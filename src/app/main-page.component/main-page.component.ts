@@ -1,9 +1,5 @@
 import {Component} from '@angular/core';
-//import './../externalJS/ffff.js';
-
-declare var sum: any;
-declare var saveJSON: any;
-declare var jsonfile: any;
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'main-page',
@@ -12,37 +8,16 @@ declare var jsonfile: any;
 })
 
 export class MainPageComponent {
-
-  private sss: string;
+  private socket;
 
   constructor() {
-    saveJSON();
-  }
-
-  createJSON() {
-    var fileUrl = './test/json';
-    var obj = {name: "roman"};
-    jsonfile.writeFile(fileUrl, obj, function (err) {
-      console.error(err);
+    this.socket = io.connect('http://localhost:4200');
+    this.socket.on('connect', () => {
+      console.log('connect');
     });
   }
 
-
+  send(msg) {
+    this.socket.emit('message', msg);
+  }
 }
-
-/*
-
- import * as io from 'socket.io-client';
-
-FROM CONSTRUCTOR:
-this.socket = io('http://localhost:4200');
-this.socket.on('message', (msg) => {
-  console.log(msg);
-});
-
-ANOTHER FUNC
-send(msg) {
- this.socket.emit('message', msg);
-}
-
-*/
