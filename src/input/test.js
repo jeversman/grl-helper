@@ -10,32 +10,73 @@ const readline = require('readline');
 // 	output: process.stdout
 // });
 
-var menu = ["new", "edit"];
-var properties = ["name", "age", "color"];
+var menu = ["new", "edit", "list", "delete", "exit"];
+var properties = ["name", "age", "koeff"];
+var persons = [];
 var lastId = 0;
 
 function main() {
-  // start();
-  test();
+  start();
+  // test();
 }
 
 function test() {
-  var str = "";
 
-  prompt.get('name var', function(err, result) {
+}
 
+function sort(propIndex) {
+  var propName = properties[propIndex];
+  var sortedArr = persons;
 
-  });
+  for (var j = 0, len = sortedArr.length - 1; j < len; j++) {
+    var swapped = false;
+    var i = 0;
+    while (i < len - j) {
+      if (sortedArr[i][propName] > sortedArr[i + 1][propName]) {
+        var c = sortedArr[i];
+        sortedArr[i] = sortedArr[i + 1];
+        sortedArr[i + 1] = c;
+        swapped = true;
+      }
+      i++;
+    }
+
+    if(!swapped)
+      break;
+  }
+
+  return sortedArr;
 }
 
 function start() {
+  loadPersons();
   showMenu();
 }
 
+function loadPersons() {
+  jsonfile.readFile("./test.json", function(err, obj) {
+    persons = obj;
+    lastId = getMaxId();
+  });
+}
+
+function getMaxId() {
+  var id = 0;
+  for (var i = 0; i < persons.length; i++) {
+    if (persons[i].id > id) {
+      id = persons[i].id;
+    }
+  }
+  return id;
+}
+
 function showMenu() {
+  console.log(' ');
+  console.log('== MENU =======================');
   for (var i = 0; i < menu.length; i++) {
     console.log((i+1) + ". " + menu[i]);
   }
+  console.log(' ');
 
   prompt.get('select', function(err, result) {
     getSelectedMenuItem(parseInt(result.select));
@@ -48,68 +89,117 @@ function getSelectedMenuItem(itemNumber) {
       newPerson();
       break;
     case 2:
-      console.log("2 typed");
+      edit();
+      break;
+    case 3:
+      list();
+      break;
+    case 4:
+      deletePerson();
+      break;
+    case 5:
+      exit();
       break;
     default:
-      console.log("unk");
+      showMenu();
       break;
   }
 }
 
 function newPerson() {
   var id = getNextId();
-  var newPerson = {id: id};
+  var newPersonJSONObj = {id: id};
+
+  setPersonProperty(0, newPersonJSONObj);
 }
 
-function setNewPersonProperty(propertyName) {
-  prompt.get('input ' + propertyName, function(err, result) {
+function setPersonProperty(propertyIndex, newPersonJSONObj) {
+  if (properties[propertyIndex] != null) {
 
+    showListWithProperty(propertyIndex);
+
+    var propertyName = properties[propertyIndex];
+    prompt.get(propertyName, function(err, result) {
+      newPersonJSONObj[propertyName] = result[propertyName];
+      setPersonProperty(propertyIndex + 1, newPersonJSONObj);
+    });
+  }
+  else {
+    persons.push(newPersonJSONObj);
+    console.log("person added");
+    showMenu();
+  }
+}
+
+function showListWithProperty(indexProperty) {
+  var propName = properties[indexProperty];
+
+  console.log(' ');
+  console.log('== LIST ' + propName + ' ==================');
+
+  var listForSorting = (parseInt(persons[0][propName]) != null ) ? sort(indexProperty) : persons;
+
+  for (var i = 0; i < listForSorting.length; i++) {
+    console.log((i + 1) + '. ' + listForSorting[i].name + '   ' + listForSorting[i][propName]);
+  }
+
+  console.log(' ');
+}
+
+function edit() {
+  showPersons();
+
+  prompt.get('person', function(err, result) {
+    var number = parseInt(result.person);
+    editPerson(number - 1);
   });
 }
 
+function editPerson(index) {
+  var id = persons[index].id;
+  persons.splice(index, 1);
 
-function  initProperties() {
-
+  var newPersonJSONObj = {id: id};
+  setPersonProperty(0, newPersonJSONObj);
 }
 
-var arr = [];
-function start1() {
-	prompt.start();
-	getAnother();
-}
+function deletePerson() {
+  showPersons();
 
-function getProperty(propertyStr) {
-  prompt.get(propertyStr, function(err, result) {
-      return result;
+  prompt.get('person', function(err, result) {
+    var number = parseInt(result.person);
+    persons.splice(number - 1, 1);
+    showMenu();
   });
 }
 
-
-
-
-function testReadJson() {
-  jsonfile.readFile("./test.json", function(err, obj) {
-    console.dir(obj);
-  });
+function exit() {
+  save();
 }
 
-function foo() {
-	var result = [];
-	var currId = 1;
+function list() {
+  showPersons();
+  showMenu();
+}
 
-	while (currId < 3) {
-		var name = readLineSync.question('Input name: \n');
-		result.push({id: currId, name: name});
-		currId++;
-	}
+function showPersons() {
+  console.log(' ');
+  console.log('== PERSONS ===================');
 
-	var jsonString = JSON.stringify(result);
-	writeJSON(JSON.parse(jsonString));
+  for (var i = 0; i < persons.length; i++) {
+    console.log((i + 1) + ". " + persons[i].name);
+  }
+  console.log(' ');
+}
+
+function save() {
+  writeJSON(JSON.parse(JSON.stringify(persons)));
 }
 
 function writeJSON(obj) {
 	jsonfile.writeFile('test.json', obj, function (err) {
-		console.error(err);
+		if (err) console.error(err);
+    else console.error("saved");
 	});
 }
 
@@ -117,9 +207,5 @@ function getNextId() {
   lastId++;
   return lastId;
 }
-
-
-
-
 
 main();
