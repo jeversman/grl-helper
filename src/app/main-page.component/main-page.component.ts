@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import * as io from 'socket.io-client';
 
 @Component({
   selector: 'main-page',
@@ -8,16 +7,5 @@ import * as io from 'socket.io-client';
 })
 
 export class MainPageComponent {
-  private socket;
-
-  constructor() {
-    this.socket = io.connect('http://localhost:4200');
-    this.socket.on('connect', () => {
-      console.log('connect');
-    });
-  }
-
-  send(msg) {
-    this.socket.emit('message', msg);
-  }
+  constructor() {}
 }
