@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+
 import {PersonsService} from "../persons.service/persons.service";
+import {Person} from './../models/person';
 
 @Component({
   selector: 'standings',
@@ -7,7 +9,7 @@ import {PersonsService} from "../persons.service/persons.service";
 })
 
 export class StandingsComponent implements OnInit {
-  private persons:string[];
+  private persons:Person[];
 
   constructor(private personsService:PersonsService) {};
 
@@ -16,6 +18,6 @@ export class StandingsComponent implements OnInit {
   }
 
   getPersons() {
-    this.persons = this.personsService.getPersons();
+    this.personsService.getPersons().then(persons => this.persons = persons);
   }
 }
