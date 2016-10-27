@@ -5,4 +5,9 @@ export class Person {
   power: number;
   skill: number;
   speed: number;
+  mind: number;
+
+  getAverage():number {
+    return (this.power + this.skill + this.speed + this.mind) / 4;
+  }
 }

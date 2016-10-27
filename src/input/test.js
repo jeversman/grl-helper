@@ -11,7 +11,7 @@ const readline = require('readline');
 // });
 
 var menu = ["new", "edit", "list", "delete", "exit"];
-var properties = ["name", "age", "koeff"];
+var properties = ["name", "age", "power", "skill", "speed", "mind"];
 var persons = [];
 var lastId = 0;
 
@@ -30,9 +30,9 @@ function sort(propIndex) {
 
   for (var j = 0, len = sortedArr.length - 1; j < len; j++) {
     var swapped = false;
-    var i = 0;
+    var i = 0; //len - j
     while (i < len - j) {
-      if (sortedArr[i][propName] > sortedArr[i + 1][propName]) {
+      if (sortedArr[i][propName] < sortedArr[i + 1][propName]) {
         var c = sortedArr[i];
         sortedArr[i] = sortedArr[i + 1];
         sortedArr[i + 1] = c;
@@ -134,16 +134,31 @@ function setPersonProperty(propertyIndex, newPersonJSONObj) {
 function showListWithProperty(indexProperty) {
   var propName = properties[indexProperty];
 
+  if (persons.length <= 0) return;
+
+  var LENGTH_STR = 10;
+
   console.log(' ');
   console.log('== LIST ' + propName + ' ==================');
 
-  var listForSorting = (parseInt(persons[0][propName]) != null ) ? sort(indexProperty) : persons;
+  var listForSorting = ((parseInt(persons[0][propName]) != null ) && (persons.length > 0)) ? sort(indexProperty) : persons;
 
   for (var i = 0; i < listForSorting.length; i++) {
-    console.log((i + 1) + '. ' + listForSorting[i].name + '   ' + listForSorting[i][propName]);
+    var spaces = getSpaces(LENGTH_STR - listForSorting[i].name.length);
+    console.log((i + 1) + '. ' + listForSorting[i].name + spaces + listForSorting[i][propName]);
   }
 
   console.log(' ');
+}
+
+function getSpaces(count) {
+  var spaces = '';
+  var j = 0;
+  while (j < count) {
+    spaces += ' ';
+    j++;
+  }
+  return spaces;
 }
 
 function edit() {
