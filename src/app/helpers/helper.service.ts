@@ -1,8 +1,11 @@
+import {Injectable} from '@angular/core';
+
 import {Person} from './../models/person';
 
-export class SortHelper {
+@Injectable()
+export class HelperService {
 
-  getSortedArrayOfPersons(private arr:Person[], keyName:string):Person[] {
+  getSortedArrayOfPersons(arr:Person[], keyName:string):Person[] {
     var sortedArr:Person[] = arr;
 
     for (var j = 0, len = sortedArr.length - 1; j < len; j++) {
