@@ -1,1 +1,27 @@
-[{"id":6,"name":"nastya","age":"25","power":"5","skill":"6","speed":"6","mind":"8"},{"id":4,"name":"shef","age":"28","power":"7","skill":"7","speed":"7","mind":"7"},{"id":1,"name":"roman","age":"23","power":"7","skill":"7","speed":"6","mind":"7"},{"id":7,"name":"lena","age":"23","power":"6","skill":"7","speed":"6","mind":"6"},{"id":3,"name":"dima","age":"43","power":"4","skill":"7","speed":"3","mind":"6"},{"id":5,"name":"sasha","age":"28","power":"6","skill":"6","speed":"4","mind":"5"},{"id":9,"name":"oleg","age":"24","power":"4","skill":"3","speed":"4","mind":"3"}]
+{
+  persons: [],
+  properties: {
+    "interior": [
+      {"mind"}
+    ],
+    "external": []
+  }
+}
+
+{
+  "basketballPlayer": {
+    "interior": {
+      "mind": Int,
+      "flair": Int
+    },
+    "external": {
+      "throw": {
+        "accuracy": Int,
+        "distance": Int
+      },
+      "speed": Int
+    }
+  }
+}
+
+
