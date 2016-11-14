@@ -1,4 +1,7 @@
-var prompt = require('prompt');
+var newPersonModule = require('./new-person.js');
+var personControllerModule = require('./person-controller.js');
+var saverModule = require('./saver.js');
+var promptHelperModule = require('./prompt-helper.js');
 
 var COMMANDS = {
   "new": function () {
@@ -21,10 +24,9 @@ function main() {
   waitCommand('enter command');
 }
 
-
 function waitCommand(msg) {
-  prompt.get(msg, function(err, result) {
-    runCommand(result[msg]);
+  promptHelperModule.wait(msg, function (res) {
+    runCommand(res);
   });
 }
 
@@ -33,7 +35,12 @@ function runCommand(command) {
 }
 
 function newPerson() {
-  console.log("creating new person");
+  var id = 1; //FIX THIS
+
+  newPersonModule.startCreatingNewPerson(id, function (person) {
+    personControllerModule.addPerson(person);
+    waitCommand('enter command');
+  });
 }
 
 function showList() {
@@ -45,5 +52,6 @@ function deletePerson() {
 }
 
 function exit() {
-  console.log("exit exit");
+  var persons = personControllerModule.getPersons();
+  saverModule.save("persons", persons);
 }

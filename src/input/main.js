@@ -87,23 +87,23 @@ function getSelectedMenuItem(itemNumber) {
 
 
 
-function setPersonProperty(propertyIndex, newPersonJSONObj) {
-  if (properties[propertyIndex] != null) {
-
-    showListWithProperty(propertyIndex);
-
-    var propertyName = properties[propertyIndex];
-    prompt.get(propertyName, function(err, result) {
-      newPersonJSONObj[propertyName] = result[propertyName];
-      setPersonProperty(propertyIndex + 1, newPersonJSONObj);
-    });
-  }
-  else {
-    persons.push(newPersonJSONObj);
-    console.log("person added");
-    showMenu();
-  }
-}
+// function setPersonProperty(propertyIndex, newPersonJSONObj) {
+//   if (properties[propertyIndex] != null) {
+//
+//     showListWithProperty(propertyIndex);
+//
+//     var propertyName = properties[propertyIndex];
+//     prompt.get(propertyName, function(err, result) {
+//       newPersonJSONObj[propertyName] = result[propertyName];
+//       setPersonProperty(propertyIndex + 1, newPersonJSONObj);
+//     });
+//   }
+//   else {
+//     persons.push(newPersonJSONObj);
+//     console.log("person added");
+//     showMenu();
+//   }
+// }
 
 function showListWithProperty(indexProperty) {
   var propName = properties[indexProperty];

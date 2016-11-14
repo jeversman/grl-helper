@@ -28,3 +28,7 @@ var PROPERTIES = [
   }
 ];
 
+/*
+  Вообще, персона должна такой вид иметь: {id: Int, name: String, chars: []}, послдений массив выклядит как PROPERTIES
+ */
+
